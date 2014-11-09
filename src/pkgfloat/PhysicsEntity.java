@@ -79,9 +79,9 @@ public class PhysicsEntity extends Entity {
 		zrv=0;
 	}
         
-        void tick(){
-            x += xv;
-            y += yv;
-            z += zv;
+        void tick(long deltaT){
+            x += xv * deltaT;
+            y += yv * deltaT;
+            z += zv * deltaT;
         }
 }

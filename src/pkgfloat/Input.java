@@ -28,6 +28,11 @@ public class Input {
         float dy = (float) Mouse.getDY();
         yaw += dx / 10;
         roll -= dy / 10;
+        if (roll > 90){
+            roll = 90;
+        }else if(roll < -90){
+            roll = -90;
+        }
 
         float pxvToAdd = 0;
         float pzvToAdd = 0;
