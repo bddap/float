@@ -13,13 +13,27 @@ public class Float {
 
     private static void mainLoop() {
         PhysicsEntity player = new PhysicsEntity();
+        Cube cube = new Cube();
+        cube.xv = .01;
+        Cube[] friendCubes = new Cube[100];
+        for (int i = 0; i < friendCubes.length; i++){
+            double angle = i;
+            angle = angle/50*Math.PI;
+            friendCubes[i] = new Cube();
+            friendCubes[i].xv = Math.sin(angle)/10;
+            friendCubes[i].zv = Math.cos(angle)/10;
+        }
         while (!Display.isCloseRequested()) {
             BddapGraphics.startNewFrame();
 
             Input.control(player);
             player.tick();
 
-            BddapGraphics.placeInWorld(Models.ib, 0, 0, 0);
+            BddapGraphics.placeInWorld(cube);
+            for (int i = 0; i < friendCubes.length; i++){
+                friendCubes[i].tick();
+                BddapGraphics.placeInWorld(friendCubes[i]);
+            }
 
             glLoadIdentity();
 

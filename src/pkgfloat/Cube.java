@@ -1,7 +1,7 @@
 package pkgfloat;
 
 public class Cube extends PhysicsEntity {
-
+    
     Cube(double xs, double ys, double zs) {
         x = xs;
         y = ys;
@@ -18,6 +18,10 @@ public class Cube extends PhysicsEntity {
         xrv = 0;
         yrv = 0;
         zrv = 0;
+    }
+    
+    Cube() {
+        zero();
     }
 
     //private static cubeIndices = Models.createBuffer(Models.cube);

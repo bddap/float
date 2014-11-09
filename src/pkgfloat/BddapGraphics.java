@@ -10,10 +10,10 @@ public class BddapGraphics {
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
-    static void placeInWorld(IntBuffer ib, double x, double y, double z) {
+    static void placeInWorld(Cube cube) {
         glPushMatrix();
-        glTranslated(x, y, z);
-        glDrawElements(GL_QUADS, ib);
+        glTranslated(cube.x, cube.y, cube.z);
+        glDrawElements(GL_QUADS, Models.cube);
         glPopMatrix();
     }
 

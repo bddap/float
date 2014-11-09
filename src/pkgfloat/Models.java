@@ -7,11 +7,11 @@ import org.lwjgl.BufferUtils;
 
 public class Models {
     public static DoubleBuffer vb;
-    public static IntBuffer ib;
+    public static IntBuffer cube;
     
     static void genBuffers(){
         vb = Models.createBuffer(Models.verts);
-        ib = Models.createBuffer(Models.cube);
+        cube = Models.createBuffer(Models.cubeAr);
     }
     
     public static DoubleBuffer createBuffer(double[] inarray){
@@ -28,7 +28,7 @@ public class Models {
         .5, -.5, .5, .5, -.5, -.5, -.5, -.5, -.5, -.5, -.5, .5
     };
     
-    public static final int[] cube = {
+    public static final int[] cubeAr = {
         0, 1, 2, 3,
         7, 6, 5, 4,
         0, 1, 5, 4,

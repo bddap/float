@@ -6,20 +6,7 @@ public class PhysicsEntity extends Entity {
 	public double krv,xrv,yrv,zrv;
 	
 	PhysicsEntity(){
-		x=0;
-		y=0;
-		z=0;
-		xv=0;
-		yv=0;
-		zv=0;
-		kr=0;
-		xr=0;
-		yr=0;
-		zr=0;
-		krv=0;
-		xrv=0;
-		yrv=0;
-		zrv=0;
+		zero();
 	}
 	
 	PhysicsEntity(double xs, double ys, double zs){
@@ -73,6 +60,23 @@ public class PhysicsEntity extends Entity {
 		xrv=p.xrv;
 		yrv=p.yrv;
 		zrv=p.zrv;
+	}
+        
+        void zero(){
+		x=0;
+		y=0;
+		z=0;
+		xv=0;
+		yv=0;
+		zv=0;
+		kr=0;
+		xr=0;
+		yr=0;
+		zr=0;
+		krv=0;
+		xrv=0;
+		yrv=0;
+		zrv=0;
 	}
         
         void tick(){
