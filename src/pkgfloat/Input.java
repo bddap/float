@@ -16,8 +16,13 @@ import static pkgfloat.Float.roll;
  * @author bddap
  */
 public class Input {
-    static void control(PhysicsEntity ent) {
-        final double accel = 0.01;
+    static Timer inputTimer;
+    
+    Input(){
+    }
+    
+    static void control(PhysicsEntity ent, long timePassed) {
+        double accel = .0001 * timePassed;
         
         float dx = (float) Mouse.getDX();
         float dy = (float) Mouse.getDY();

@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class Float {
 
     public static void main(String[] args) {
+        //System.setProperty( "java.library.path", "dist/naitive/all" );
         BoringStuff.init();
         mainLoop();
         exit();
@@ -23,16 +24,17 @@ public class Float {
             friendCubes[i].xv = Math.sin(angle)/10;
             friendCubes[i].zv = Math.cos(angle)/10;
         }
+        Timer gameTimer = new Timer();
         while (!Display.isCloseRequested()) {
             BddapGraphics.startNewFrame();
 
-            Input.control(player);
+            Input.control(player, gameTimer.read());
             player.tick();
 
             BddapGraphics.placeInWorld(cube);
-            for (int i = 0; i < friendCubes.length; i++){
-                friendCubes[i].tick();
-                BddapGraphics.placeInWorld(friendCubes[i]);
+            for (Cube friendCube : friendCubes) {
+                friendCube.tick();
+                BddapGraphics.placeInWorld(friendCube);
             }
 
             glLoadIdentity();

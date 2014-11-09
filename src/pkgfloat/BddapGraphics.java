@@ -2,6 +2,8 @@ package pkgfloat;
 
 import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL30.*;
 import java.nio.IntBuffer;
 
 public class BddapGraphics {
@@ -18,7 +20,7 @@ public class BddapGraphics {
     }
 
     static void UpdateScreen() {
-        Display.sync(60);
+        //Display.sync(60);
         Display.update();
         BoringStuff.checkWindowResize();
     }
@@ -34,7 +36,16 @@ public class BddapGraphics {
 
         glEnableClientState(GL_VERTEX_ARRAY);
         glVertexPointer(3, 0, Models.vb);
-        //glPolygonMode(GL_FRONT, GL_FILL);
+        
+        //int vbo = glGenBuffers();
+        //glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        //glBufferData(GL_ARRAY_BUFFER, Models.vb, GL_STATIC_DRAW);
+        
+        //glEnable(GL_TEXTURE_2D);
+        //glBindTexture(GL_TEXTURE_2D, Models.cubeTexture.getTextureID());
+        //glTexCoordPointer(2, 0, Models.cubetp);
+        //GL11.glTexCoord2d(.5, .5);
+        glPolygonMode(GL_BACK, GL_LINE);
     }
 
     static void setFov(double radians) {
