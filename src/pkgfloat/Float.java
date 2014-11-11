@@ -25,12 +25,13 @@ public class Float {
             friendCubes[i].zv = Math.cos(angle)/1000;
             friendCubes[i].yv = Math.cos(angle*8)/10000 + Math.cos(angle)/5000;
         }
+        PhysicsEntity TotoroShip = new PhysicsEntity();
         Timer gameTimer = new Timer();
         while (!Display.isCloseRequested()) {
             BddapGraphics.startNewFrame();
 
-            Input.control(player, gameTimer.read());
-            player.tick(gameTimer.getDelta());
+            Input.control(TotoroShip, gameTimer.read());
+            TotoroShip.tick(gameTimer.getDelta());
 
             BddapGraphics.placeInWorld(cube);
             for (Cube friendCube : friendCubes) {
@@ -42,13 +43,12 @@ public class Float {
             
             double butts = System.currentTimeMillis();
             
-            System.out.println(butts);
-            
             glColor3d(Math.sin(butts/1050),.1,Math.cos(butts/5000));
             
             glRotated(roll, 1, 0, 0);
             glRotated(yaw, 0, 1, 0);
-            BddapGraphics.setCameraPos(player);
+            
+            BddapGraphics.setCameraPos(TotoroShip);
 
             BddapGraphics.UpdateScreen();
         }
