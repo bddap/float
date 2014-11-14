@@ -27,17 +27,23 @@ public class Float {
         }
         PhysicsEntity TotoroShip = new PhysicsEntity();
         Timer gameTimer = new Timer();
+        Stars stars = new Stars();
         while (!Display.isCloseRequested()) {
             BddapGraphics.startNewFrame();
 
             Input.control(TotoroShip, gameTimer.read());
             TotoroShip.tick(gameTimer.getDelta());
 
+            glColor3d(.3,.3,1);
+            stars.inefficientDraw();
+            
+            glColor3d(1,1,1);
             BddapGraphics.placeInWorld(cube);
             for (Cube friendCube : friendCubes) {
                 friendCube.tick(gameTimer.getDelta());
                 BddapGraphics.placeInWorld(friendCube);
             }
+            
 
             glLoadIdentity();
             

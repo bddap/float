@@ -15,7 +15,8 @@ public class BddapGraphics {
     static void placeInWorld(Cube cube) {
         glPushMatrix();
         glTranslated(cube.x, cube.y, cube.z);
-        glDrawElements(GL_QUADS, Models.cube);
+        glDrawArrays(GL_TRIANGLES,0,Models.verts.length);
+        //glDrawElements(GL_QUADS, Models.cube);
         glPopMatrix();
     }
 
@@ -41,11 +42,14 @@ public class BddapGraphics {
         //glBindBuffer(GL_ARRAY_BUFFER, vbo);
         //glBufferData(GL_ARRAY_BUFFER, Models.vb, GL_STATIC_DRAW);
         
+        //int ibo = glGenBuffers();
+        //glBindBuffer();
+                
         //glEnable(GL_TEXTURE_2D);
-        //glBindTexture(GL_TEXTURE_2D, Models.cubeTexture.getTextureID());
-        //glTexCoordPointer(2, 0, Models.cubetp);
-        //GL11.glTexCoord2d(.5, .5);
-        glPolygonMode(GL_BACK, GL_LINE);
+        glBindTexture(GL_TEXTURE_2D, Models.cubeTexture.getTextureID());
+        glTexCoordPointer(2, 0, Models.cubetp);
+        
+        glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     }
 
     static void setFov(double radians) {
@@ -59,7 +63,7 @@ public class BddapGraphics {
         height = width * ratio;
 
         glMatrixMode(GL_PROJECTION);
-        glFrustum(-height, height, -width, width, frustumNear, 10000);
+        glFrustum(-height, height, -width, width, frustumNear, 100000);
         glMatrixMode(GL_MODELVIEW);
         fov = radians;
     }
