@@ -35,6 +35,7 @@ public class Input {
         }
 
         float pxvToAdd = 0;
+        float pyvToAdd = 0;
         float pzvToAdd = 0;
         if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
             pxvToAdd -= accel * Math.sin(Math.toRadians(yaw));
@@ -53,7 +54,16 @@ public class Input {
             pxvToAdd -= accel * Math.sin(Math.toRadians(yaw + 90));
             pzvToAdd += accel * Math.cos(Math.toRadians(yaw + 90));
         }
+        if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
+            pyvToAdd += accel * Math.cos(Math.toRadians(roll));
+            //pyvToAdd += accel * Math.cos(Math.toRadians(roll - 90));
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_Q)) {
+            pyvToAdd -= accel * Math.cos(Math.toRadians(roll));
+            //pyvToAdd += accel * Math.cos(Math.toRadians(roll + 90));
+        }
         ent.xv += pxvToAdd;
+        ent.yv += pyvToAdd;
         ent.zv += pzvToAdd;
     }
 }

@@ -45,11 +45,11 @@ public class BddapGraphics {
         //int ibo = glGenBuffers();
         //glBindBuffer();
                 
-        //glEnable(GL_TEXTURE_2D);
+        glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, Models.cubeTexture.getTextureID());
         glTexCoordPointer(2, 0, Models.cubetp);
         
-        glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+        glPolygonMode(GL_BACK, GL_POINT);
     }
 
     static void setFov(double radians) {

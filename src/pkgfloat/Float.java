@@ -25,7 +25,7 @@ public class Float {
             friendCubes[i].zv = Math.cos(angle)/1000;
             friendCubes[i].yv = Math.cos(angle*8)/10000 + Math.cos(angle)/5000;
         }
-        PhysicsEntity TotoroShip = new PhysicsEntity();
+        PhysicsEntity TotoroShip = new PhysicsEntity(0,1,0);
         Timer gameTimer = new Timer();
         Stars stars = new Stars();
         while (!Display.isCloseRequested()) {
