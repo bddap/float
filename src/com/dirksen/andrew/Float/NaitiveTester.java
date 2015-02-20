@@ -96,10 +96,23 @@ public class NaitiveTester {
  
         // Set the clear color
         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
- 
+        float t;
+        long ns;						//nanoseconds
+        long stns = System.nanoTime();	//start time in nanoseconds
+        float blu, gre, red;
+        
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( glfwWindowShouldClose(window) == GL_FALSE ) {
+        	ns = System.nanoTime();
+        	t = (float)(ns-stns)/1.0E9f;
+        	
+        	blu = (float)(Math.sin(t)/2+0.5);
+        	red = (float)(Math.sin(t*0.99f)/2+0.5);
+        	gre = (float)(Math.sin(t*1.01f)/2+0.5);
+        	
+        	//System.out.println(blu);
+            glClearColor(red, gre, blu, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
  
             glfwSwapBuffers(window); // swap the color buffers
@@ -110,8 +123,5 @@ public class NaitiveTester {
         }
     }
  
-    public static void main(String[] args) {
-        new NaitiveTester().run();
-    }
  
 }
