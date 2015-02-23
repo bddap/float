@@ -94,12 +94,15 @@ public class GameWindow {
 		glfwWindowHint(GLFW_VISIBLE, GL_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // set resizable
         
+        //ubuntu with unity crashes here
         myWindow = glfwCreateWindow(width, hieght, windowName, NULL, NULL);
+		
         if ( myWindow == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
         
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(myWindow, keyCallback = new GLFWKeyCallback() {
+        	
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
                 if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
@@ -170,6 +173,45 @@ public class GameWindow {
     	//System.out.println(blu);
         glClearColor(red, gre, blu, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+        
+        /*GL11.glLoadIdentity();  
+        
+        GL11.glTranslatef(0f,0.0f,-7f);             
+        GL11.glRotatef(45f,0.0f,1.0f,0.0f);               
+        //GL11.glColor3f(0.5f,0.5f,1.0f);  
+             
+        GL11.glBegin(GL11.GL_QUADS);    
+           GL11.glColor3f(1.0f,1.0f,0.0f);           
+           GL11.glVertex3f( 1.0f, 1.0f,-1.0f);        
+           GL11.glVertex3f(-1.0f, 1.0f,-1.0f);        
+           GL11.glVertex3f(-1.0f, 1.0f, 1.0f);
+           GL11.glVertex3f( 1.0f, 1.0f, 1.0f);  
+           GL11.glColor3f(1.0f,0.5f,0.0f);            
+           GL11.glVertex3f( 1.0f,-1.0f, 1.0f);
+           GL11.glVertex3f(-1.0f,-1.0f, 1.0f);
+           GL11.glVertex3f(-1.0f,-1.0f,-1.0f);
+           GL11.glVertex3f( 1.0f,-1.0f,-1.0f);
+           GL11.glColor3f(1.0f,0.0f,0.0f);
+           GL11.glVertex3f( 1.0f, 1.0f, 1.0f);
+           GL11.glVertex3f(-1.0f, 1.0f, 1.0f);
+           GL11.glVertex3f(-1.0f,-1.0f, 1.0f);
+           GL11.glVertex3f( 1.0f,-1.0f, 1.0f);
+           GL11.glColor3f(1.0f,1.0f,0.0f);
+           GL11.glVertex3f( 1.0f,-1.0f,-1.0f);
+           GL11.glVertex3f(-1.0f,-1.0f,-1.0f);
+           GL11.glVertex3f(-1.0f, 1.0f,-1.0f);
+           GL11.glVertex3f( 1.0f, 1.0f,-1.0f);
+           GL11.glColor3f(0.0f,0.0f,1.0f);
+           GL11.glVertex3f(-1.0f, 1.0f, 1.0f);
+           GL11.glVertex3f(-1.0f, 1.0f,-1.0f);
+           GL11.glVertex3f(-1.0f,-1.0f,-1.0f);
+           GL11.glVertex3f(-1.0f,-1.0f, 1.0f);
+           GL11.glColor3f(1.0f,0.0f,1.0f);
+           GL11.glVertex3f( 1.0f, 1.0f,-1.0f);
+           GL11.glVertex3f( 1.0f, 1.0f, 1.0f);
+           GL11.glVertex3f( 1.0f,-1.0f, 1.0f);
+           GL11.glVertex3f( 1.0f,-1.0f,-1.0f);
+       GL11.glEnd();  */
 
         glfwSwapBuffers(myWindow); // swap the color buffers
 
