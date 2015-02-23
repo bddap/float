@@ -95,7 +95,12 @@ public class GameWindow {
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // set resizable
         
         //ubuntu with unity crashes here
+        //see https://github.com/glfw/glfw/issues/368
+        System.out.println("Unity halts here. If your game stops at this line, you need to update unity.\n" +
+        		"If there is no unity update yet, you can try using gnome:\n" +
+        		"http://askubuntu.com/questions/450294/how-to-switch-from-unity-to-gnome");
         myWindow = glfwCreateWindow(width, hieght, windowName, NULL, NULL);
+        System.out.println("Good thing you are not using unity. :)");
 		
         if ( myWindow == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
