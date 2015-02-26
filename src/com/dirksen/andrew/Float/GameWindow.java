@@ -114,6 +114,9 @@ public class GameWindow {
         GLContext.createFromCurrent();
         
         initGl();
+        
+        //test
+        asteroid = new Asteroid();
 	}
 	
 	private void initGl() {
@@ -123,7 +126,7 @@ public class GameWindow {
         GL11.glClearDepth(1.0); 
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthFunc(GL11.GL_LEQUAL); 
-
+        
         GL11.glMatrixMode(GL11.GL_PROJECTION); 
         GL11.glLoadIdentity();
 
@@ -134,8 +137,8 @@ public class GameWindow {
 	}
 	
 	void setFrustum(double fov){
-		double near = 0.0000001;
-		double far = 1000.0;
+		double near = 0.001;
+		double far = 100.0;
 		double aspect = hieght/width;
 		double right = Math.tan(fov/2)*near;
 		double left = -right;
@@ -170,7 +173,10 @@ public class GameWindow {
 		return (glfwWindowShouldClose(myWindow) == GL_TRUE);
 	}
 	
+	Asteroid asteroid;
+	
 	void testUpdate(){
+				
 		float age = age();
 		
     	float blu = (float)(Math.sin(age)/2+0.5);
@@ -185,43 +191,12 @@ public class GameWindow {
         
         
         GL11.glTranslated(0,0,-10);  
-        GL11.glRotated(Math.sin(age)*1000,0,1.0,0);           
+        GL11.glRotated(Math.sin(age)*1000,Math.sin(age/2),Math.cos(age/2),0);           
         //GL11.glRotatef(45f,0.0f,1.0f,0.0f);         
         //GL11.glRotated(age,0.0,1.0,0.0);               
-        //GL11.glColor3f(0.5f,0.5f,1.0f);  
-             
-        GL11.glBegin(GL11.GL_QUADS);    
-           GL11.glColor3f(1.0f,1.0f,0.0f);           
-           GL11.glVertex3f( 1.0f, 1.0f,-1.0f);        
-           GL11.glVertex3f(-1.0f, 1.0f,-1.0f);        
-           GL11.glVertex3f(-1.0f, 1.0f, 1.0f);
-           GL11.glVertex3f( 1.0f, 1.0f, 1.0f);  
-           GL11.glColor3f(1.0f,0.5f,0.0f);            
-           GL11.glVertex3f( 1.0f,-1.0f, 1.0f);
-           GL11.glVertex3f(-1.0f,-1.0f, 1.0f);
-           GL11.glVertex3f(-1.0f,-1.0f,-1.0f);
-           GL11.glVertex3f( 1.0f,-1.0f,-1.0f);
-           GL11.glColor3f(1.0f,0.0f,0.0f);
-           GL11.glVertex3f( 1.0f, 1.0f, 1.0f);
-           GL11.glVertex3f(-1.0f, 1.0f, 1.0f);
-           GL11.glVertex3f(-1.0f,-1.0f, 1.0f);
-           GL11.glVertex3f( 1.0f,-1.0f, 1.0f);
-           GL11.glColor3f(1.0f,1.0f,0.0f);
-           GL11.glVertex3f( 1.0f,-1.0f,-1.0f);
-           GL11.glVertex3f(-1.0f,-1.0f,-1.0f);
-           GL11.glVertex3f(-1.0f, 1.0f,-1.0f);
-           GL11.glVertex3f( 1.0f, 1.0f,-1.0f);
-           GL11.glColor3f(0.0f,0.0f,1.0f);
-           GL11.glVertex3f(-1.0f, 1.0f, 1.0f);
-           GL11.glVertex3f(-1.0f, 1.0f,-1.0f);
-           GL11.glVertex3f(-1.0f,-1.0f,-1.0f);
-           GL11.glVertex3f(-1.0f,-1.0f, 1.0f);
-           GL11.glColor3f(1.0f,0.0f,1.0f);
-           GL11.glVertex3f( 1.0f, 1.0f,-1.0f);
-           GL11.glVertex3f( 1.0f, 1.0f, 1.0f);
-           GL11.glVertex3f( 1.0f,-1.0f, 1.0f);
-           GL11.glVertex3f( 1.0f,-1.0f,-1.0f);
-       GL11.glEnd();
+        //GL11.glColor3f(0.5f,0.5f,1.0f);
+        
+        asteroid.draw();
 
         glfwSwapBuffers(myWindow); // swap the color buffers
 

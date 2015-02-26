@@ -8,23 +8,16 @@ public class Matrix {
 	}
 	
 	Matrix(){
-		mat = new double[][]
-			{
-				{ 1, 0, 0, 0},
-				{ 0, 1, 0, 0},
-				{ 0, 0, 1, 0},
-				{ 0, 0, 0, 1}
+		mat = new double[][]{
+			{ 1, 0, 0, 0},
+			{ 0, 1, 0, 0},
+			{ 0, 0, 1, 0},
+			{ 0, 0, 0, 1}
 			};
 	}
 	
 	void multiply(double other[][]){
-		double result[][] = 
-			{
-				{ mat[0][0]*other[0][0]+mat[0][1]*other[1][0]+mat[0][2]*other[2][0], mat[0][0]*other[0][1]+mat[0][1]*other[1][1]+mat[2][0]*other[2][1], 0, 0},
-				{ 0, 1, 0, 0},
-				{ 0, 0, 1, 0},
-				{ 0, 0, 0, 1}
-			};
+		double result[][] = new double[4][4];
 		
 		for(int i = 0; i < 4; i++){
 			for(int j = 0; j < 4; j++){
@@ -37,5 +30,23 @@ public class Matrix {
 
 	void multiply(Matrix otherMat){
 		multiply(otherMat.mat);
+	}
+	
+	static Matrix translation(double x, double y, double z){
+		return new Matrix(new double[][]{
+					{ 1, 0, 0, x},
+					{ 0, 1, 0, y},
+					{ 0, 0, 1, z},
+					{ 0, 0, 0, 1}
+					});
+	}
+	
+	static Matrix identity(){
+		return new Matrix(new double[][]{
+					{ 1, 0, 0, 0},
+					{ 0, 1, 0, 0},
+					{ 0, 0, 1, 0},
+					{ 0, 0, 0, 1}
+					});
 	}
 }
