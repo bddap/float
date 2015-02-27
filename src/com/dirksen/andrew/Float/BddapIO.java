@@ -12,10 +12,7 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWKeyCallback;
-import org.lwjgl.glfw.GLFWvidmode;
+import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
@@ -25,6 +22,7 @@ public class BddapIO {
 	private long myWindow;	//used to identify corresponding window
     private GLFWErrorCallback errorCallback;
     private GLFWKeyCallback   keyCallback;	//for keyboard input
+    GLFWWindowSizeCallback windowResize;
     private static int monitorHieght,monitorWidth;
     private long initTime;
 	//public boolean[] pressedKeys;
@@ -91,6 +89,15 @@ public class BddapIO {
             }
         });
         
+        /* 	unfinished
+		GLFW.glfwSetWindowSizeCallback(myWindow, windowResize = new GLFWWindowSizeCallback(){
+			@Override
+            public void invoke(long window, int width, int height){
+				setFrustum(Math.PI/4, width, height);
+			}
+        });
+        */
+        
         // Get the resolution of the primary monitor
         ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         monitorWidth = GLFWvidmode.width(vidmode);
@@ -119,7 +126,12 @@ public class BddapIO {
         
         //test
         
-        asteroid = new Asteroid(-2,-1,-10);
+        asteroid = new Asteroid(
+        		Matrix.translation(-5, -5, -10),
+        		Matrix.translation(0.03, 0.03, -0.010),
+        		Matrix.rotation(1, 0, 1, 0),
+        		Matrix.rotation(0.01, 1, 0, 0)
+        		);
 	}
 	
 	private void initGl() {
@@ -133,7 +145,7 @@ public class BddapIO {
         GL11.glMatrixMode(GL11.GL_PROJECTION); 
         GL11.glLoadIdentity();
 
-        setFrustum(Math.PI/2);
+        setFrustum(Math.PI/4);
 
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
@@ -192,6 +204,7 @@ public class BddapIO {
     	//glRotated(Math.sin(age)*1000, Math.sin(age), Math.cos(age), 0);
     	//GL11.glScalef(10, 10, 10);
     	
+    	asteroid.tick();
         asteroid.draw();
         printCurrentModelviewMatrix();
         

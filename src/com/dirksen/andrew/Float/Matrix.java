@@ -41,7 +41,7 @@ public class Matrix {
 		matb = bb.asDoubleBuffer();
 	}
 	
-	void multiply(double other[]){
+	Matrix multiply(double other[]){
 		double result[] = new double[16];
 		
 		for(int i = 0; i < 4; i++){
@@ -51,10 +51,12 @@ public class Matrix {
 				}
 			}
 		}
+		
+		return new Matrix(result);
 	}
 
-	void multiply(Matrix otherMat){
-		multiply(otherMat.mat);
+	Matrix multiply(Matrix otherMat){
+		return multiply(otherMat.mat);
 	}
 	
 	static Matrix translation(double x, double y, double z){
