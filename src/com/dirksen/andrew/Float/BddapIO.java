@@ -17,7 +17,7 @@ import org.lwjgl.glfw.GLFWvidmode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
-public class GameWindow {
+public class BddapIO {
 	private int hieght,width;//,originalHieght,originalWidth;
 	private String windowName;
 	private long myWindow;	//used to identify corresponding window
@@ -27,7 +27,7 @@ public class GameWindow {
     private long initTime;
 	//public boolean[] pressedKeys;
 	
-	GameWindow(int width, int hieght, String windowName){
+	BddapIO(int width, int hieght, String windowName){
 		this.width = width;
 		this.hieght = hieght;
 		this.windowName = windowName;
@@ -36,11 +36,11 @@ public class GameWindow {
 		initTime = System.currentTimeMillis();
 	}
 	
-	GameWindow(int width, int hieght){
+	BddapIO(int width, int hieght){
 		this(width,hieght,"");
 	}
 	
-	GameWindow(){
+	BddapIO(){
 		this(500,500, "");
 	}
 	
@@ -116,7 +116,7 @@ public class GameWindow {
         initGl();
         
         //test
-        asteroid = new Asteroid();
+        asteroid = new Asteroid(0.0,0.0,10.0);
 	}
 	
 	private void initGl() {
@@ -176,32 +176,36 @@ public class GameWindow {
 	Asteroid asteroid;
 	
 	void testUpdate(){
-				
 		float age = age();
 		
     	float blu = (float)(Math.sin(age)/2+0.5);
     	float red = (float)(Math.sin(age*0.99f)/2+0.5);
     	float gre = (float)(Math.sin(age*1.01f)/2+0.5);
     	
-    	//System.out.println(blu);
-        glClearColor(red, gre, blu, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-    	    	
-        GL11.glLoadIdentity();  
-        
-        
-        GL11.glTranslated(0,0,-10);  
-        GL11.glRotated(Math.sin(age)*1000,Math.sin(age/2),Math.cos(age/2),0);           
-        //GL11.glRotatef(45f,0.0f,1.0f,0.0f);         
-        //GL11.glRotated(age,0.0,1.0,0.0);               
-        //GL11.glColor3f(0.5f,0.5f,1.0f);
-        
+    	GL11.glClearColor(red, gre, blu, 0.5f);
+    	prepareToDraw();
+
+        glTranslated(0,0,-10);
+    	glRotated(Math.sin(age)*1000, Math.sin(age), Math.cos(age), 0);
         asteroid.draw();
-
-        glfwSwapBuffers(myWindow); // swap the color buffers
-
-        // Poll for window events. The key callback above will only be
-        // invoked during this call.
-        glfwPollEvents();
+        
+        sendToScreen();
+        
+        inputUpdate();
+	}
+	
+	private void prepareToDraw(){
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        GL11.glLoadIdentity(); 
+	}
+	
+	private void sendToScreen(){
+		 glfwSwapBuffers(myWindow); // swap the color buffers
+	}
+	
+	void inputUpdate(){
+	     // Poll for window events. The key callback above will only be
+	     // invoked during this call.
+		 glfwPollEvents();
 	}
 }
