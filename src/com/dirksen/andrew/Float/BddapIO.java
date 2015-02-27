@@ -9,7 +9,9 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
@@ -116,7 +118,8 @@ public class BddapIO {
         initGl();
         
         //test
-        asteroid = new Asteroid(0.0,0.0,10.0);
+        
+        asteroid = new Asteroid(-2,-1,-10);
 	}
 	
 	private void initGl() {
@@ -177,7 +180,7 @@ public class BddapIO {
 	
 	void testUpdate(){
 		float age = age();
-		
+		//System.out.println("poop is yummy");	//Good one
     	float blu = (float)(Math.sin(age)/2+0.5);
     	float red = (float)(Math.sin(age*0.99f)/2+0.5);
     	float gre = (float)(Math.sin(age*1.01f)/2+0.5);
@@ -185,9 +188,12 @@ public class BddapIO {
     	GL11.glClearColor(red, gre, blu, 0.5f);
     	prepareToDraw();
 
-        glTranslated(0,0,-10);
-    	glRotated(Math.sin(age)*1000, Math.sin(age), Math.cos(age), 0);
+        //glTranslated(1,5,-10);
+    	//glRotated(Math.sin(age)*1000, Math.sin(age), Math.cos(age), 0);
+    	//GL11.glScalef(10, 10, 10);
+    	
         asteroid.draw();
+        printCurrentModelviewMatrix();
         
         sendToScreen();
         
@@ -207,5 +213,17 @@ public class BddapIO {
 	     // Poll for window events. The key callback above will only be
 	     // invoked during this call.
 		 glfwPollEvents();
+	}
+	
+	void printCurrentModelviewMatrix(){
+		FloatBuffer modelview = BufferUtils.createFloatBuffer(16);
+    	GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelview);
+    	for(int i = 0 ; i < 16 ; i++)
+    	{
+    		if (i % 4 == 0)
+    			System.out.println();
+    		System.out.print(modelview.get(i) + " ");
+    	}
+		System.out.println();
 	}
 }

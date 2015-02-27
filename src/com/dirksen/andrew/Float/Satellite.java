@@ -13,4 +13,9 @@ public class Satellite {
 		position = Matrix.translation(x,y,z);
 		velocity = Matrix.identity();
 	}
+	
+	Satellite(Matrix position){
+		this.position = position;
+		velocity = Matrix.identity();
+	}
 }
