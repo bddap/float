@@ -111,15 +111,6 @@ public class BddapIO {
         
         render = new Renderer(windowId);
         
-        //test
-        
-        asteroid = new Asteroid(
-        		Matrix.translation(-5, -5, -10),
-        		Matrix.translation(0.03, 0.03, -0.010),
-        		Matrix.rotation(1, 0, 1, 0),
-        		Matrix.rotation(0.01, 1, 0, 0)
-        		);
-        
         return windowId;
 	}
 	
@@ -152,22 +143,30 @@ public class BddapIO {
 		return (glfwWindowShouldClose(windowId) == GL_TRUE);
 	}
 	
+	//begin test code
 	Asteroid asteroid;
+	private boolean didInit = false;
 	
 	void testUpdate(){
-		float age = age();
+		if (didInit == false){
+			asteroid = new Asteroid(
+	        		Matrix.translation(0, 0, -10),
+	        		Matrix.translation(0.0, 0.0, 0.0),
+	        		Matrix.rotation(0.0, 0, 0, 1),
+	        		Matrix.rotation(0.0, 1, 1, 1)
+	        		);
+			input.takeControlOf(asteroid);
+			didInit = true;
+		}
+		//float age = age();
 		//System.out.println("poop is yummy");	//Good one
-    	float r = (float)(Math.sin(age*0.99f)/2+0.5);
-    	float g = (float)(Math.sin(age*1.01f)/2+0.5);
-    	float b = (float)(Math.sin(age)/2+0.5);
+    	//float r = (float)(Math.sin(age*0.99f)/2+0.5);
+    	//float g = (float)(Math.sin(age*1.01f)/2+0.5);
+    	//float b = (float)(Math.sin(age)/2+0.5);
     	
-    	render.setClearColor(r,g,b,0.0f);
+    	//render.setClearColor(r,g,b,0.0f);
     	
     	render.prepareToDraw();
-
-        //glTranslated(1,5,-10);
-    	//glRotated(Math.sin(age)*1000, Math.sin(age), Math.cos(age), 0);
-    	//GL11.glScalef(10, 10, 10);
     	
     	asteroid.tick();
         asteroid.draw();
@@ -177,6 +176,7 @@ public class BddapIO {
         
         inputUpdate();
 	}
+	//end test code
 	
 	void inputUpdate(){
 	     // Poll for window events. The key callback above will only be

@@ -54,4 +54,5 @@ public class Asteroid extends Satellite {
 	        GL11.glVertex3f( 1.0f,-1.0f,-1.0f);
 	    GL11.glEnd();   
 	}
+	
 }

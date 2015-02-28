@@ -41,7 +41,7 @@ public class Matrix {
 		matb = bb.asDoubleBuffer();
 	}
 	
-	Matrix multiply(double other[]){
+	private Matrix multiply(double other[]){
 		double result[] = new double[16];
 		
 		for(int i = 0; i < 4; i++){
@@ -57,6 +57,20 @@ public class Matrix {
 
 	Matrix multiply(Matrix otherMat){
 		return multiply(otherMat.mat);
+	}
+
+	Vector multiply(double x, double y, double z){
+		double result[] = new double[3];
+		
+		result[0] = mat[0*4+0]*x + mat[0*4+1]*y + mat[0*4+2]*z + mat[0*4+3];
+		result[1] = mat[1*4+0]*x + mat[1*4+1]*y + mat[1*4+2]*z + mat[1*4+3];
+		result[2] = mat[2*4+0]*x + mat[2*4+1]*y + mat[2*4+2]*z + mat[2*4+3];
+
+		System.out.print(result[0]+" ");
+		System.out.print(result[1]+" ");
+		System.out.println(result[2]+" ");
+		
+		return new Vector(result);
 	}
 	
 	static Matrix translation(double x, double y, double z){
@@ -103,7 +117,7 @@ public class Matrix {
 					t*x*x+c, t*x*y - s*z, t*x*z + s*y, 0,
 					t*x*y+s*z, t*y*y+c, t*y*z-s*x, 0,
 					t*x*z-s*y, t*y*z+s*x, t*z*z+c, 0,
-					0, 0, 0, 1	//might need a 0 here instead of a 1
+					0, 0, 0, 1
 					});
 	}
 	
@@ -134,5 +148,11 @@ public class Matrix {
 		//printDubbaray(matb.array());
 	}
 
+	Matrix rotate(double theta, double x, double y, double z){
+		return Matrix.rotation(theta, x, y, z).multiply(this);
+	}
 	
+	Matrix translate(double x, double y, double z){
+		return this.multiply(Matrix.translation(x, y, z));
+	}
 }

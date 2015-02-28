@@ -39,4 +39,19 @@ public class Satellite {
 		position = position.multiply(velocity);
 		rotation = rotation.multiply(rotvel);
 	}
+
+	void linearVTranslateLocal(double x, double y, double z){
+
+		System.out.print(x+" ");
+		System.out.print(y+" ");
+		System.out.println(z+" ");
+		
+		Vector v = rotation.multiply(x,y,z);
+		
+		System.out.print(v.xyz[0]+" ");
+		System.out.print(v.xyz[1]+" ");
+		System.out.println(v.xyz[2]+" ");
+		velocity = velocity.multiply(Matrix.translation(v.xyz[0], v.xyz[1], v.xyz[2]));
+		velocity.print();
+	}
 }

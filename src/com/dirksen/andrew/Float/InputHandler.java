@@ -11,7 +11,8 @@ public class InputHandler {
 	//TODO private GLFWMouseButtonCallback mouseCallBack;
 	boolean keyStates[];
 	final long window;
-	Satellite underControl;
+	private static Satellite underControl;
+	static boolean hasValidSatellite = false;
 	
 	InputHandler(long window){
 		this.window = window;
@@ -46,9 +47,36 @@ public class InputHandler {
 	
 	void onKeyPress(int key){        
         keyStates[key] = true;
-        System.out.println("You pressed " + (char)key);
+        
+        if (hasValidSatellite){
+        	controlSatellite(key);
+        }
     }
 	
+	private void controlSatellite(int key) {
+		final double tvstep = 0.01;
+		final double rvstep = 0.1;
+		
+		if (key == GLFW_KEY_W){
+        	underControl.linearVTranslateLocal(0, 0, tvstep);
+        }
+		else if (key == GLFW_KEY_A){
+        	underControl.linearVTranslateLocal(0, 0, -tvstep);
+        }else if (key == GLFW_KEY_S){
+        	underControl.linearVTranslateLocal(tvstep, 0, 0.0);        	
+        }else if (key == GLFW_KEY_D){
+        	underControl.linearVTranslateLocal(-tvstep, 0, 0.0);        	
+        }else if (key == GLFW_KEY_UP){
+        	underControl.rotvel = underControl.rotvel.rotate(rvstep, 1, 0, 0);
+        }else if (key == GLFW_KEY_DOWN){
+        	underControl.rotvel = underControl.rotvel.rotate(-rvstep, 1, 0, 0);
+        }else if (key == GLFW_KEY_LEFT){
+        	underControl.rotvel = underControl.rotvel.rotate(rvstep, 0, 1, 0);
+        }else if (key == GLFW_KEY_RIGHT){
+        	underControl.rotvel = underControl.rotvel.rotate(-rvstep, 0, 1, 0);
+        }
+	}
+
 	void onKeyRelease(int key){
 		if ( key == GLFW_KEY_ESCAPE)
             glfwSetWindowShouldClose(window, GL_TRUE); // We will detect this in our rendering loop
@@ -56,5 +84,26 @@ public class InputHandler {
             BddapIO.toggleHideMouse(window);
         
        	keyStates[key] = false;
+	}
+	
+	void takeControlOf(Satellite toControl){
+		underControl = toControl;
+		hasValidSatellite = true;
+	}
+	
+	void printKeyStates(){
+		for (int i = 0; i<keyStates.length; i++){
+        	if (keyStates[i]){
+        		System.out.print("1");
+        	}else{
+        		System.out.print("0");
+        	}
+        	if (i%4==3)
+        		System.out.print(" ");
+        	if (i%64==63)
+        		System.out.println();
+        }
+        System.out.println();
+        System.out.println();
 	}
 }
