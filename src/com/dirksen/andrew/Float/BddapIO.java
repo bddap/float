@@ -150,10 +150,10 @@ public class BddapIO {
 	void testUpdate(){
 		if (didInit == false){
 			asteroid = new Asteroid(
-	        		new Matrix(Matrix.translation(0, 0, -10)),
-	        		new Matrix(Matrix.translation(0.0, 0.0, 0.0)),
+	        		new Matrix(Matrix.translation(-5, -5, -10)),
+	        		new Matrix(Matrix.translation(0.01, 0.01, 0.01)),
 	        		new Matrix(Matrix.rotation(0.0, 0, 0, 1)),
-	        		new Matrix(Matrix.rotation(0.0, 1, 1, 1))
+	        		new Matrix(Matrix.rotation(0.01, 1, 1, 1))
 	        		);
 			input.takeControlOf(asteroid);
 			didInit = true;
