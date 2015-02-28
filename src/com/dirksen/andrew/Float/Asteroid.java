@@ -7,18 +7,14 @@ public class Asteroid extends Satellite {
 		super(x,y,z);
 	}
 	
-	Asteroid(Matrix position){
-		super(position);
-	}
-	
 	Asteroid(Matrix position, Matrix velocity, Matrix rotation, Matrix rotvel){
 		super(position, velocity, rotation, rotvel);
 	}
 	
 	void draw(){
 
-		GL11.glMultMatrix(position.matb);
-		GL11.glMultMatrix(rotation.matb);
+		GL11.glMultMatrix(position.getDbuf());
+		GL11.glMultMatrix(rotation.getDbuf());
 		//position.print();
 		
 		GL11.glBegin(GL11.GL_QUADS);    

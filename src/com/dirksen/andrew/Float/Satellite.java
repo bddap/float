@@ -6,41 +6,33 @@ public class Satellite {
 	Matrix rotation;
 	Matrix rotvel;
 	
-	
 	Satellite(){
-		position = Matrix.identity();
-		velocity = Matrix.identity();
-		rotation = Matrix.identity();
-		rotvel = Matrix.identity();
+		position = new Matrix(Matrix.identity());
+		velocity = new Matrix(Matrix.identity());
+		rotation = new Matrix(Matrix.identity());
+		rotvel   = new Matrix(Matrix.identity());
 	}
 	
 	Satellite(double x, double y, double z){
-		position = Matrix.translation(x,y,z);
-		velocity = Matrix.identity();
-		rotation = Matrix.identity();
-		rotvel = Matrix.identity();
-	}
-	
-	Satellite(Matrix position){
-		this.position = position;
-		velocity = Matrix.identity();
-		rotation = Matrix.identity();
-		rotvel = Matrix.identity();
+		position = new Matrix(Matrix.translation(x,y,z));
+		velocity = new Matrix(Matrix.identity());
+		rotation = new Matrix(Matrix.identity());
+		rotvel   = new Matrix(Matrix.identity());
 	}
 	
 	Satellite(Matrix position, Matrix velocity, Matrix rotation, Matrix rotvel){
 		this.position = position;
 		this.velocity = velocity;
 		this.rotation = rotation;
-		this.rotvel = rotvel;
+		this.rotvel   =	rotvel;
 	}
 	
 	void tick(){
-		position = position.multiply(velocity);
-		rotation = rotation.multiply(rotvel);
+		position = Matrix.multiply(position, velocity);
+		rotation = Matrix.multiply(rotation, rotvel);
 	}
 
-	void linearVTranslateLocal(double x, double y, double z){
+	/*void linearVTranslateLocal(double x, double y, double z){
 
 		System.out.print(x+" ");
 		System.out.print(y+" ");
@@ -53,5 +45,5 @@ public class Satellite {
 		System.out.println(v.xyz[2]+" ");
 		velocity = velocity.multiply(Matrix.translation(v.xyz[0], v.xyz[1], v.xyz[2]));
 		velocity.print();
-	}
+	}*/
 }

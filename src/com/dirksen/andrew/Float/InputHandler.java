@@ -56,8 +56,8 @@ public class InputHandler {
 	private void controlSatellite(int key) {
 		final double tvstep = 0.01;
 		final double rvstep = 0.1;
-		
-		if (key == GLFW_KEY_W){
+		//TODO
+		/*if (key == GLFW_KEY_W){
         	underControl.linearVTranslateLocal(0, 0, tvstep);
         }
 		else if (key == GLFW_KEY_A){
@@ -74,7 +74,7 @@ public class InputHandler {
         	underControl.rotvel = underControl.rotvel.rotate(rvstep, 0, 1, 0);
         }else if (key == GLFW_KEY_RIGHT){
         	underControl.rotvel = underControl.rotvel.rotate(-rvstep, 0, 1, 0);
-        }
+        }*/
 	}
 
 	void onKeyRelease(int key){
