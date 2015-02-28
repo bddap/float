@@ -19,7 +19,7 @@ public class Asteroid extends Satellite {
 
 		GL11.glMultMatrix(position.matb);
 		GL11.glMultMatrix(rotation.matb);
-		position.print();
+		//position.print();
 		
 		GL11.glBegin(GL11.GL_QUADS);    
 			GL11.glColor3f(1.0f,1.0f,0.0f);           

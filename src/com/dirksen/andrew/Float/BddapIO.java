@@ -5,34 +5,31 @@ package com.dirksen.andrew.Float;
 import static org.lwjgl.glfw.Callbacks.errorCallbackPrint;
 import static org.lwjgl.glfw.GLFW.*;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_TRUE;	//trying too keep
+import static org.lwjgl.opengl.GL11.GL_FALSE;	//openGl code in Renderer.class
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-
-import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
 public class BddapIO {
 	private int hieght,width;//,originalHieght,originalWidth;
 	private String windowName;
-	private long myWindow;	//used to identify corresponding window
+	final long windowId;	//used to identify corresponding window
     private GLFWErrorCallback errorCallback;
-    private GLFWKeyCallback   keyCallback;	//for keyboard input
     GLFWWindowSizeCallback windowResize;
     private static int monitorHieght,monitorWidth;
     private long initTime;
-	//public boolean[] pressedKeys;
+    InputHandler input;
+    Renderer render;
 	
 	BddapIO(int width, int hieght, String windowName){
 		this.width = width;
 		this.hieght = hieght;
 		this.windowName = windowName;
 		//pressedKeys = new boolean[64];
-		initWindow();
+		windowId = initWindow();
 		initTime = System.currentTimeMillis();
 	}
 	
@@ -45,21 +42,21 @@ public class BddapIO {
 	}
 	
 	void destroy(){
-        glfwDestroyWindow(myWindow);
-        keyCallback.release();
+        glfwDestroyWindow(windowId);
+        input.destroy();
         
         // Terminate GLFW and release the GLFWerrorfun
         glfwTerminate();
         errorCallback.release();
 	}
 
-	private void initWindow() {
+	private long initWindow() {
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
         glfwSetErrorCallback(errorCallback = errorCallbackPrint(System.err));
 		
 		//start glfw
-		if ( glfwInit() != GL11.GL_TRUE )
+		if ( glfwInit() != GL_TRUE )
             throw new IllegalStateException("Unable to initialize GLFW");
 		
 		//configure window
@@ -71,23 +68,13 @@ public class BddapIO {
         System.out.println("Unity halts here. If your game stops at this line, you need to update unity.\n" +
         		"If there is no unity update yet, you can try using gnome:\n" +
         		"http://askubuntu.com/questions/450294/how-to-switch-from-unity-to-gnome");
-        myWindow = glfwCreateWindow(width, hieght, windowName, NULL, NULL);
+        long windowId = glfwCreateWindow(width, hieght, windowName, NULL, NULL);
         System.out.println("Good thing you are not using unity. :)");
 		
-        if ( myWindow == NULL )
+        if ( windowId == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
         
-        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(myWindow, keyCallback = new GLFWKeyCallback() {
-        	
-            @Override
-            public void invoke(long window, int key, int scancode, int action, int mods) {
-                if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-                    glfwSetWindowShouldClose(window, GL_TRUE); // We will detect this in our rendering loop
-                if ( key == GLFW_KEY_E && action == GLFW_RELEASE )
-                    toggleHideMouse();
-            }
-        });
+        input = new InputHandler(windowId);
         
         /* 	unfinished
 		GLFW.glfwSetWindowSizeCallback(myWindow, windowResize = new GLFWWindowSizeCallback(){
@@ -106,14 +93,14 @@ public class BddapIO {
         System.out.println("Monitor hieght == "+monitorHieght);
         
         // Make the OpenGL context current
-        glfwMakeContextCurrent(myWindow);
+        glfwMakeContextCurrent(windowId);
 
 		// Enable v-sync
         glfwSwapInterval(1);	//TODO: play around with this number
         
         //put window in front/make window visible
         //not sure which
-        glfwShowWindow(myWindow);
+        glfwShowWindow(windowId);
         
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
@@ -122,7 +109,7 @@ public class BddapIO {
         // bindings available for use.
         GLContext.createFromCurrent();
         
-        initGl();
+        render = new Renderer(windowId);
         
         //test
         
@@ -132,50 +119,27 @@ public class BddapIO {
         		Matrix.rotation(1, 0, 1, 0),
         		Matrix.rotation(0.01, 1, 0, 0)
         		);
-	}
-	
-	private void initGl() {
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glShadeModel(GL11.GL_SMOOTH);
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); 
-        GL11.glClearDepth(1.0); 
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glDepthFunc(GL11.GL_LEQUAL); 
         
-        GL11.glMatrixMode(GL11.GL_PROJECTION); 
-        GL11.glLoadIdentity();
-
-        setFrustum(Math.PI/4);
-
-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
+        return windowId;
 	}
 	
-	void setFrustum(double fov){
-		double near = 0.001;
-		double far = 100.0;
-		double aspect = hieght/width;
-		double right = Math.tan(fov/2)*near;
-		double left = -right;
-		double top = right * aspect;
-		double bottom = -top;
-		GL11.glFrustum(left, right, bottom, top, near, far);
-	}
+	
+	
 
-	void hideMouse(){
-        glfwSetInputMode(myWindow, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED );
+	static void hideMouse(long window){
+        glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED );
 	}
 	
-	void showMouse(){
-        glfwSetInputMode(myWindow, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+	static void showMouse(long window){
+        glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
 	}
 	
-	void toggleHideMouse(){
-		if (glfwGetInputMode(myWindow, GLFW.GLFW_CURSOR) == GLFW.GLFW_CURSOR_NORMAL){
-	        glfwSetInputMode(myWindow, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED );
+	static void toggleHideMouse(long window){
+		if (glfwGetInputMode(window, GLFW.GLFW_CURSOR) == GLFW.GLFW_CURSOR_NORMAL){
+	        glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED );
 		}
 		else{
-	        glfwSetInputMode(myWindow, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+	        glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
 		}
 	}
 	
@@ -185,7 +149,7 @@ public class BddapIO {
 	}
 	
 	boolean shouldClose(){
-		return (glfwWindowShouldClose(myWindow) == GL_TRUE);
+		return (glfwWindowShouldClose(windowId) == GL_TRUE);
 	}
 	
 	Asteroid asteroid;
@@ -193,12 +157,13 @@ public class BddapIO {
 	void testUpdate(){
 		float age = age();
 		//System.out.println("poop is yummy");	//Good one
-    	float blu = (float)(Math.sin(age)/2+0.5);
-    	float red = (float)(Math.sin(age*0.99f)/2+0.5);
-    	float gre = (float)(Math.sin(age*1.01f)/2+0.5);
+    	float r = (float)(Math.sin(age*0.99f)/2+0.5);
+    	float g = (float)(Math.sin(age*1.01f)/2+0.5);
+    	float b = (float)(Math.sin(age)/2+0.5);
     	
-    	GL11.glClearColor(red, gre, blu, 0.5f);
-    	prepareToDraw();
+    	render.setClearColor(r,g,b,0.0f);
+    	
+    	render.prepareToDraw();
 
         //glTranslated(1,5,-10);
     	//glRotated(Math.sin(age)*1000, Math.sin(age), Math.cos(age), 0);
@@ -206,37 +171,16 @@ public class BddapIO {
     	
     	asteroid.tick();
         asteroid.draw();
-        printCurrentModelviewMatrix();
+        //render.printCurrentModelviewMatrix();
         
-        sendToScreen();
+        render.sendToScreen();
         
         inputUpdate();
-	}
-	
-	private void prepareToDraw(){
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        GL11.glLoadIdentity(); 
-	}
-	
-	private void sendToScreen(){
-		 glfwSwapBuffers(myWindow); // swap the color buffers
 	}
 	
 	void inputUpdate(){
 	     // Poll for window events. The key callback above will only be
 	     // invoked during this call.
 		 glfwPollEvents();
-	}
-	
-	void printCurrentModelviewMatrix(){
-		FloatBuffer modelview = BufferUtils.createFloatBuffer(16);
-    	GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelview);
-    	for(int i = 0 ; i < 16 ; i++)
-    	{
-    		if (i % 4 == 0)
-    			System.out.println();
-    		System.out.print(modelview.get(i) + " ");
-    	}
-		System.out.println();
 	}
 }
