@@ -145,6 +145,7 @@ public class BddapIO {
 	
 	//begin test code
 	Asteroid asteroid;
+	Satellite player;
 	private boolean didInit = false;
 	
 	void testUpdate(){
@@ -155,7 +156,13 @@ public class BddapIO {
 	        		new Matrix(Matrix.rotation(0, 0, 0, 1)),
 	        		new Matrix(Matrix.rotation(0.0, 1, 1, 1))
 	        		);
-			input.takeControlOf(asteroid);
+			player = new Satellite(
+	        		new Matrix(Matrix.translation(0, 0, 0)),
+	        		new Matrix(Matrix.translation(0.0, 0.0, 0)),
+	        		new Matrix(Matrix.rotation(0, 0, 0, 1)),
+	        		new Matrix(Matrix.rotation(0.0, 1, 1, 1))
+	        		);
+			input.takeControlOf(player);
 			didInit = true;
 		}
 		//float age = age();
@@ -167,6 +174,8 @@ public class BddapIO {
     	//render.setClearColor(r,g,b,0.0f);
     	
     	render.prepareToDraw();
+    	player.tick();
+    	render.setAsCamera(player);
     	
     	asteroid.tick();
         asteroid.draw();

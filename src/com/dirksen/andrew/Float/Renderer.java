@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.glClear;
 
 public class Renderer {
 	final long windowId;
-	private double fov = Math.PI/4;
+	private double fov = Math.PI/2;
 	
 	Renderer(long windowId){
 		this.windowId = windowId;
@@ -74,7 +74,7 @@ public class Renderer {
 	}
 	
 	void setAsCamera(Satellite cam){
-		
+		GL11.glMultMatrix(Matrix.multiply(cam.rotation, cam.position).inverse().getDbuf());
 	}
 	
 	void printCurrentModelviewMatrix(){
