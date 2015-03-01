@@ -34,7 +34,7 @@ public class InputHandler {
         	
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
-            	if (key <= GLFW_KEY_LAST){	//prevent out of bounds on keyStates
+            	if (0 <= key & key <= GLFW_KEY_LAST){	//prevent out of bounds on keyStates
 	            	if (action == GLFW_PRESS){
 	            		onKeyPress(key);
 	            	} else if (action == GLFW_RELEASE){
@@ -54,16 +54,16 @@ public class InputHandler {
     }
 	
 	private void controlSatellite(int key) {
-		final double tvstep = 0.1;
-		final double rvstep = 0.001;
+		final double tvstep = 1;
+		final double rvstep = 0.01;
 		
 		if (key == GLFW_KEY_W){
-        	underControl.thrust(0,0,tvstep);
+        	underControl.thrust(0,0,-tvstep);
         }
 		else if (key == GLFW_KEY_A){
 			underControl.thrust(-tvstep,0,0);
         }else if (key == GLFW_KEY_S){
-        	underControl.thrust(0,0,-tvstep);     	
+        	underControl.thrust(0,0,tvstep);     	
         }else if (key == GLFW_KEY_D){
         	underControl.thrust(tvstep,0,0);    	
         }else if (key == GLFW_KEY_UP){

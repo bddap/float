@@ -62,18 +62,128 @@ public class Matrix{
 	}
 	
 	Matrix inverse(){
-		double[] result = new double[16];
+		double[] result = {
+				mat[2*4+2]*mat[3*4+3]*mat[4*4+4] +
+				mat[2*4+3]*mat[3*4+4]*mat[4*4+2] +
+				mat[2*4+4]*mat[3*4+2]*mat[4*4+3] -
+				mat[2*4+2]*mat[3*4+4]*mat[4*4+3] -
+				mat[2*4+3]*mat[3*4+2]*mat[4*4+4] -
+				mat[2*4+4]*mat[3*4+3]*mat[4*4+2],
+				
+				mat[1*4+2]*mat[3*4+4]*mat[4*4+3] +
+				mat[1*4+3]*mat[2*4+3]*mat[4*4+4] +
+				mat[1*4+4]*mat[3*4+3]*mat[4*4+4] -
+				mat[1*4+2]*mat[3*4+3]*mat[4*4+4] -
+				mat[1*4+3]*mat[3*4+4]*mat[4*4+2] -
+				mat[1*4+4]*mat[3*4+2]*mat[4*4+3],
+				
+				mat[1*4+2]*mat[2*4+3]*mat[4*4+4] +
+				mat[1*4+3]*mat[2*4+4]*mat[4*4+2] +
+				mat[1*4+4]*mat[2*4+2]*mat[4*4+3] -
+				mat[1*4+2]*mat[2*4+4]*mat[4*4+3] -
+				mat[1*4+3]*mat[2*4+2]*mat[4*4+4] -
+				mat[1*4+4]*mat[2*4+3]*mat[4*4+2],
+				
+				mat[1*4+2]*mat[2*4+4]*mat[3*4+3] +
+				mat[1*4+3]*mat[2*4+2]*mat[3*4+4] +
+				mat[1*4+4]*mat[2*4+3]*mat[3*4+2] -
+				mat[1*4+3]*mat[2*4+3]*mat[3*4+4] -
+				mat[1*4+3]*mat[2*4+4]*mat[3*4+2] -
+				mat[1*4+4]*mat[2*4+2]*mat[3*4+3],
+				
+				mat[2*4+1]*mat[3*4+4]*mat[4*4+3] +
+				mat[2*4+3]*mat[3*4+2]*mat[4*4+4] +
+				mat[2*4+4]*mat[3*4+3]*mat[4*4+1] -
+				mat[2*4+1]*mat[3*4+3]*mat[4*4+4] -
+				mat[2*4+3]*mat[3*4+4]*mat[4*4+1] -
+				mat[2*4+4]*mat[3*4+1]*mat[4*4+3],
+				
+				mat[1*4+1]*mat[3*4+3]*mat[4*4+4] +
+				mat[1*4+3]*mat[3*4+4]*mat[4*4+1] +
+				mat[1*4+4]*mat[3*4+1]*mat[4*4+3] -
+				mat[1*4+1]*mat[3*4+4]*mat[4*4+3] -
+				mat[1*4+3]*mat[3*4+1]*mat[4*4+4] -
+				mat[1*4+4]*mat[3*4+3]*mat[4*4+1],
 		
-		System.out.println("Not yet defined.");
+				mat[1*4+1]*mat[2*4+4]*mat[4*4+3] +
+				mat[1*4+3]*mat[2*4+1]*mat[4*4+4] +
+				mat[1*4+4]*mat[2*4+3]*mat[4*4+1] -
+				mat[1*4+1]*mat[2*4+4]*mat[3*4+3] -
+				mat[1*4+3]*mat[2*4+4]*mat[4*4+1] -
+				mat[1*4+4]*mat[2*4+3]*mat[3*4+1],
+		
+				mat[1*4+1]*mat[2*4+3]*mat[3*4+4] +
+				mat[1*4+3]*mat[2*4+4]*mat[3*4+1] +
+				mat[1*4+4]*mat[2*4+1]*mat[3*4+3] -
+				mat[1*4+1]*mat[2*4+4]*mat[3*4+3] -
+				mat[1*4+3]*mat[2*4+1]*mat[3*4+4] -
+				mat[1*4+4]*mat[2*4+3]*mat[3*4+1],
+		
+				mat[2*4+1]*mat[3*4+2]*mat[4*4+4] +
+				mat[2*4+2]*mat[3*4+4]*mat[4*4+1] +
+				mat[2*4+4]*mat[3*4+1]*mat[4*4+2] -
+				mat[2*4+1]*mat[3*4+4]*mat[4*4+2] -
+				mat[2*4+2]*mat[3*4+1]*mat[4*4+4] -
+				mat[2*4+4]*mat[3*4+2]*mat[4*4+1],
+		
+				mat[1*4+1]*mat[3*4+4]*mat[4*4+2] +
+				mat[1*4+2]*mat[3*4+1]*mat[4*4+4] +
+				mat[1*4+4]*mat[3*4+2]*mat[4*4+1] -
+				mat[1*4+1]*mat[3*4+2]*mat[4*4+4] -
+				mat[1*4+2]*mat[3*4+4]*mat[4*4+1] -
+				mat[1*4+4]*mat[2*4+2]*mat[4*4+1],
+		
+				mat[1*4+1]*mat[2*4+2]*mat[4*4+4] +
+				mat[1*4+2]*mat[2*4+4]*mat[1*4+4] +
+				mat[1*4+4]*mat[2*4+1]*mat[4*4+2] -
+				mat[1*4+1]*mat[2*4+4]*mat[4*4+2] -
+				mat[1*4+2]*mat[2*4+1]*mat[4*4+4] -
+				mat[1*4+4]*mat[2*4+2]*mat[4*4+1],
+		
+				mat[1*4+1]*mat[2*4+4]*mat[3*4+2] +
+				mat[1*4+2]*mat[2*4+1]*mat[3*4+4] +
+				mat[1*4+4]*mat[2*4+2]*mat[3*4+1] -
+				mat[1*4+1]*mat[2*4+2]*mat[3*4+4] -
+				mat[1*4+2]*mat[2*4+4]*mat[3*4+1] -
+				mat[1*4+4]*mat[2*4+1]*mat[3*4+2],
+		
+				mat[2*4+1]*mat[3*4+3]*mat[4*4+2] +
+				mat[2*4+2]*mat[3*4+1]*mat[4*4+3] +
+				mat[2*4+3]*mat[3*4+2]*mat[4*4+1] -
+				mat[2*4+1]*mat[3*4+2]*mat[4*4+3] -
+				mat[2*4+1]*mat[3*4+3]*mat[4*4+1] -
+				mat[2*4+3]*mat[3*4+1]*mat[4*4+2],
+		
+				mat[1*4+1]*mat[3*4+2]*mat[4*4+3] +
+				mat[1*4+2]*mat[3*4+3]*mat[4*4+1] +
+				mat[1*4+3]*mat[3*4+1]*mat[4*4+2] -
+				mat[1*4+1]*mat[3*4+3]*mat[4*4+2] -
+				mat[1*4+2]*mat[3*4+1]*mat[4*4+3] -
+				mat[3*4+1]*mat[3*4+2]*mat[4*4+1],
+		
+				mat[1*4+1]*mat[2*4+3]*mat[4*4+2] +
+				mat[1*4+2]*mat[2*4+1]*mat[4*4+3] +
+				mat[1*4+3]*mat[2*4+2]*mat[4*4+1] -
+				mat[1*4+1]*mat[2*4+2]*mat[4*4+3] -
+				mat[1*4+2]*mat[2*4+3]*mat[4*4+1] -
+				mat[1*4+3]*mat[2*4+1]*mat[4*4+2],
+		
+				mat[1*4+1]*mat[2*4+2]*mat[3*4+3] +
+				mat[1*4+2]*mat[2*4+3]*mat[3*4+1] +
+				mat[1*4+3]*mat[2*4+1]*mat[3*4+2] -
+				mat[1*4+1]*mat[2*4+3]*mat[3*4+2] -
+				mat[1*4+2]*mat[2*4+1]*mat[3*4+3] -
+				mat[1*4+3]*mat[2*4+2]*mat[3*4+1]
+		};	//Typing this was inconvenient.
 		
 		return new Matrix(result);
 	}
 
 	double[] multiplyByVector(double x, double y, double z){
 		
-		double rx = mat[0+0]*x + mat[0+1]*y + mat[0+2]*z;
-		double ry = mat[4+0]*x + mat[4+1]*y + mat[4+2]*z;
-		double rz = -(mat[8+0]*x + mat[8+1]*y + mat[8+2]*z);
+		double rx = mat[4*0+0]*x + mat[0*0+1]*y + mat[0*0+2]*z;
+		double ry = mat[4*1+0]*x + mat[4*1+1]*y + mat[4*1+2]*z;
+		double rz = mat[4*2+0]*x + mat[4*2+1]*y + mat[4*2+2]*z;
 		
 		System.out.println("original "+x+" "+y+" "+z+"\n" +
 				"New "+rx+" "+ry+" "+rz);
@@ -107,7 +217,7 @@ public class Matrix{
 
 		// too close to 0, can't make a normalized vector
 		if (length < .000001){
-			System.out.println("BAD, rotation axis is not a nomalized vector.");
+			System.out.println("BAD, axis vector is too small for normalization.");
 		}
 		
 		x /= length;
