@@ -54,26 +54,26 @@ public class InputHandler {
     }
 	
 	private void controlSatellite(int key) {
-		final double tvstep = 0.5;
-		final double rvstep = 0.5;
+		final double tvstep = 0.1;
+		final double rvstep = 0.001;
 		
 		if (key == GLFW_KEY_W){
-        	underControl.position = Matrix.multiply(new Matrix(Matrix.translation(0,0,tvstep)), underControl.position);
+        	underControl.thrust(0,0,tvstep);
         }
 		else if (key == GLFW_KEY_A){
-			underControl.position = Matrix.multiply(new Matrix(Matrix.translation(-tvstep,0,0)), underControl.position);
+			underControl.thrust(-tvstep,0,0);
         }else if (key == GLFW_KEY_S){
-        	underControl.position = Matrix.multiply(new Matrix(Matrix.translation(0,0,-tvstep)), underControl.position);        	
+        	underControl.thrust(0,0,-tvstep);     	
         }else if (key == GLFW_KEY_D){
-        	underControl.position = Matrix.multiply(new Matrix(Matrix.translation(tvstep,0,0)), underControl.position);        	
+        	underControl.thrust(tvstep,0,0);    	
         }else if (key == GLFW_KEY_UP){
-        	underControl.position = Matrix.multiply(new Matrix(Matrix.rotation(rvstep, 1, 0, 0)), underControl.position);
+        	underControl.thrust(-rvstep, 1, 0, 0);
         }else if (key == GLFW_KEY_DOWN){
-        	underControl.position = Matrix.multiply(new Matrix(Matrix.rotation(-rvstep, 1, 0, 0)), underControl.position);
+        	underControl.thrust(rvstep, 1, 0, 0);
         }else if (key == GLFW_KEY_LEFT){
-        	underControl.position = Matrix.multiply(new Matrix(Matrix.rotation(-rvstep, 0, 1, 0)), underControl.position);
+        	underControl.thrust(-rvstep, 0, 1, 0);
         }else if (key == GLFW_KEY_RIGHT){
-        	underControl.position = Matrix.multiply(new Matrix(Matrix.rotation(rvstep, 0, 1, 0)), underControl.position);
+        	underControl.thrust(rvstep, 0, 1, 0);
         }
 	}
 

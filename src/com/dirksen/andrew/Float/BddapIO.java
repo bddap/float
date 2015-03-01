@@ -151,7 +151,7 @@ public class BddapIO {
 		if (didInit == false){
 			asteroid = new Asteroid(
 	        		new Matrix(Matrix.translation(0, 0, -10)),
-	        		new Matrix(Matrix.translation(0.0, 0.0, 0.0)),
+	        		new Matrix(Matrix.translation(0.0, 0.0, 0)),
 	        		new Matrix(Matrix.rotation(0, 0, 0, 1)),
 	        		new Matrix(Matrix.rotation(0.0, 1, 1, 1))
 	        		);

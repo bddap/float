@@ -14,7 +14,7 @@ public class Asteroid extends Satellite {
 	void draw(){
 
 		GL11.glMultMatrix(position.getDbuf());
-		//GL11.glMultMatrix(rotation.getDbuf());
+		GL11.glMultMatrix(rotation.getDbuf());
 		//position.print();
 		
 		GL11.glBegin(GL11.GL_QUADS);    
