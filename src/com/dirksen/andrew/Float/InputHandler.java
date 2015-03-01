@@ -54,27 +54,27 @@ public class InputHandler {
     }
 	
 	private void controlSatellite(int key) {
-		final double tvstep = 0.01;
-		final double rvstep = 0.1;
-		//TODO
-		/*if (key == GLFW_KEY_W){
-        	underControl.linearVTranslateLocal(0, 0, tvstep);
+		final double tvstep = 0.5;
+		final double rvstep = 0.5;
+		
+		if (key == GLFW_KEY_W){
+        	underControl.position = Matrix.multiply(new Matrix(Matrix.translation(0,0,tvstep)), underControl.position);
         }
 		else if (key == GLFW_KEY_A){
-        	underControl.linearVTranslateLocal(0, 0, -tvstep);
+			underControl.position = Matrix.multiply(new Matrix(Matrix.translation(-tvstep,0,0)), underControl.position);
         }else if (key == GLFW_KEY_S){
-        	underControl.linearVTranslateLocal(tvstep, 0, 0.0);        	
+        	underControl.position = Matrix.multiply(new Matrix(Matrix.translation(0,0,-tvstep)), underControl.position);        	
         }else if (key == GLFW_KEY_D){
-        	underControl.linearVTranslateLocal(-tvstep, 0, 0.0);        	
+        	underControl.position = Matrix.multiply(new Matrix(Matrix.translation(tvstep,0,0)), underControl.position);        	
         }else if (key == GLFW_KEY_UP){
-        	underControl.rotvel = underControl.rotvel.rotate(rvstep, 1, 0, 0);
+        	underControl.position = Matrix.multiply(new Matrix(Matrix.rotation(rvstep, 1, 0, 0)), underControl.position);
         }else if (key == GLFW_KEY_DOWN){
-        	underControl.rotvel = underControl.rotvel.rotate(-rvstep, 1, 0, 0);
+        	underControl.position = Matrix.multiply(new Matrix(Matrix.rotation(-rvstep, 1, 0, 0)), underControl.position);
         }else if (key == GLFW_KEY_LEFT){
-        	underControl.rotvel = underControl.rotvel.rotate(rvstep, 0, 1, 0);
+        	underControl.position = Matrix.multiply(new Matrix(Matrix.rotation(-rvstep, 0, 1, 0)), underControl.position);
         }else if (key == GLFW_KEY_RIGHT){
-        	underControl.rotvel = underControl.rotvel.rotate(-rvstep, 0, 1, 0);
-        }*/
+        	underControl.position = Matrix.multiply(new Matrix(Matrix.rotation(rvstep, 0, 1, 0)), underControl.position);
+        }
 	}
 
 	void onKeyRelease(int key){

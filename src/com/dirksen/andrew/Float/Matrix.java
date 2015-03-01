@@ -21,14 +21,14 @@ public class Matrix{
 		dbuf = bbuf.asDoubleBuffer();
 		
 		//test
-		System.out.println(dbuf.hasArray());
+		//System.out.println(dbuf.hasArray());
 		
 		//TODO try wrap() instead of put()
 		dbuf.put(mat);
 		dbuf.position(0);
 		
 		//test
-		System.out.println(dbuf.hasArray());
+		//System.out.println(dbuf.hasArray());
 	}
 	
 	DoubleBuffer getDbuf(){

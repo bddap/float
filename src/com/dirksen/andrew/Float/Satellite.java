@@ -26,7 +26,7 @@ public class Satellite {
 		//this.rotation = rotation;
 		this.rotvel   =	rotvel;
 		
-		position = Matrix.multiply(rotation, position);
+		this.position = Matrix.multiply(rotation, position);
 	}
 	
 	void tick(){
