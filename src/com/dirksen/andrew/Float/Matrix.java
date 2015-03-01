@@ -60,19 +60,25 @@ public class Matrix{
 		multiply(a.mat, b.mat, result);
 		return new Matrix(result);
 	}
-
-	double[] processVec(double x, double y, double z){
-		double result[] = new double[3];
+	
+	Matrix inverse(){
+		double[] result = new double[16];
 		
-		result[0] = mat[0*4+0]*x + mat[0*4+1]*y + mat[0*4+2]*z + mat[0*4+3];
-		result[1] = mat[1*4+0]*x + mat[1*4+1]*y + mat[1*4+2]*z + mat[1*4+3];
-		result[2] = mat[2*4+0]*x + mat[2*4+1]*y + mat[2*4+2]*z + mat[2*4+3];
-
-		System.out.print(result[0]+" ");
-		System.out.print(result[1]+" ");
-		System.out.println(result[2]+" ");
+		System.out.println("Not yet defined.");
 		
-		return result;
+		return new Matrix(result);
+	}
+
+	double[] multiplyByVector(double x, double y, double z){
+		
+		double rx = mat[0+0]*x + mat[0+1]*y + mat[0+2]*z;
+		double ry = mat[4+0]*x + mat[4+1]*y + mat[4+2]*z;
+		double rz = -(mat[8+0]*x + mat[8+1]*y + mat[8+2]*z);
+		
+		System.out.println("original "+x+" "+y+" "+z+"\n" +
+				"New "+rx+" "+ry+" "+rz);
+		
+		return new double[]{rx,ry,rz};
 	}
 	
 	static double[] translation(double x, double y, double z){

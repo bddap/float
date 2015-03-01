@@ -73,6 +73,10 @@ public class Renderer {
 		 glfwSwapBuffers(windowId); // swap the color buffers
 	}
 	
+	void setAsCamera(Satellite cam){
+		
+	}
+	
 	void printCurrentModelviewMatrix(){
 		FloatBuffer modelview = BufferUtils.createFloatBuffer(16);
     	GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelview);

@@ -2,50 +2,44 @@ package com.dirksen.andrew.Float;
 
 public class Satellite {
 	Matrix position;	//position is stored as a transformation matrix 
-	//Matrix rotation;
+	Matrix rotation;
 	Matrix velocity;	//velocity is applied to position every tick
 	Matrix rotvel;
 	
 	Satellite(){
 		position = new Matrix(Matrix.identity());
 		velocity = new Matrix(Matrix.identity());
-		//rotation = new Matrix(Matrix.identity());
+		rotation = new Matrix(Matrix.identity());
 		rotvel   = new Matrix(Matrix.identity());
 	}
 	
 	Satellite(double x, double y, double z){
 		position = new Matrix(Matrix.translation(x,y,z));
 		velocity = new Matrix(Matrix.identity());
-		//rotation = new Matrix(Matrix.identity());
+		rotation = new Matrix(Matrix.identity());
 		rotvel   = new Matrix(Matrix.identity());
 	}
 	
 	Satellite(Matrix position, Matrix velocity, Matrix rotation, Matrix rotvel){
 		this.position = position;
 		this.velocity = velocity;
-		//this.rotation = rotation;
+		this.rotation = rotation;
 		this.rotvel   =	rotvel;
-		
-		this.position = Matrix.multiply(rotation, position);
 	}
 	
 	void tick(){
 		position = Matrix.multiply(position, velocity);
-		position = Matrix.multiply(rotvel, position);
+		rotation = Matrix.multiply(rotvel, rotation);
 	}
 
-	/*void linearVTranslateLocal(double x, double y, double z){
-
-		System.out.print(x+" ");
-		System.out.print(y+" ");
-		System.out.println(z+" ");
-		
-		Vector v = rotation.multiply(x,y,z);
-		
-		System.out.print(v.xyz[0]+" ");
-		System.out.print(v.xyz[1]+" ");
-		System.out.println(v.xyz[2]+" ");
-		velocity = velocity.multiply(Matrix.translation(v.xyz[0], v.xyz[1], v.xyz[2]));
-		velocity.print();
-	}*/
+	void thrust(double x, double y, double z){
+		double[] rt = rotation.multiplyByVector(x,y,z);	//rotatedThrust
+		Matrix mod = new Matrix(Matrix.translation(rt[0], rt[1], rt[2]));
+		position = Matrix.multiply(position, mod);
+	}
+	
+	void thrust(double theta, double x, double y, double z){
+		Matrix mod = new Matrix(Matrix.rotation(theta, x, y, z));
+		rotvel = Matrix.multiply(rotvel,mod);
+	}
 }
