@@ -1,31 +1,36 @@
 package com.dirksen.andrew.Float;
 
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
+import java.nio.ByteBuffer;
 
 import org.lwjgl.opengl.*;
-import Jama.Matrix;
 
 public class Asteroid extends Satellite {
 	
-	Asteroid(Matrix position, Matrix velocity, Matrix rotation, Matrix rotvel){
-		super(position, velocity, rotation, rotvel);
+	Asteroid(double x, double y, double z){
+		super(x,y,z);
 		
-		ByteBuffer bb = ByteBuffer.allocateDirect(16*8);
-		bb.order(ByteOrder.nativeOrder());    // use the device hardware's native byte order
-		tempdb = bb.asDoubleBuffer();
+		//temp
+		tempdb = ByteBuffer.allocateDirect(16*8).order(ByteOrder.nativeOrder()).asDoubleBuffer();
+	}
+	
+	Asteroid(Position pos, Orientation ori, Velocity vel, AngularVelocity  ang){
+		super(pos,ori,vel,ang);
+		
+		//temp
+		tempdb = ByteBuffer.allocateDirect(16*8).order(ByteOrder.nativeOrder()).asDoubleBuffer();
 	}
 	
 	DoubleBuffer tempdb;
 
 	void draw(){
 
-		updateCompositePositionMatrix();
+		constructRenderMatrix();
 		GL11.glMultMatrix(compbb.asDoubleBuffer());
 		//GL11.glTranslated(1,2,3);
 		
-		System.out.println("compbb");
+		/*System.out.println("compbb");
 		for (int i = 0; i < 16; i++){
 			System.out.print(compbb.asDoubleBuffer().get(i)+" ");
 			if (i%4 == 3){
@@ -43,7 +48,7 @@ public class Asteroid extends Satellite {
 		}
 		System.out.println();
 		//GL11.glTranslated(0, 0, -10);
-		//position.print();
+		//position.print();*/
 		
 		GL11.glBegin(GL11.GL_QUADS);    
 			GL11.glColor3f(1.0f,1.0f,0.0f);           

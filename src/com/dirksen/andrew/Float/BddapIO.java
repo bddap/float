@@ -14,8 +14,6 @@ import java.nio.ByteBuffer;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GLContext;
 
-import Jama.Matrix;
-
 public class BddapIO {
 	private int hieght,width;//,originalHieght,originalWidth;
 	private String windowName;
@@ -154,17 +152,12 @@ public class BddapIO {
 	void testUpdate(){
 		if (didInit == false){
 			asteroid = new Asteroid(
-	        		new Matrix(Bmat.translation(0, 0, 0)),
-	        		new Matrix(Bmat.translation(0.0, 0.0, 0)),
-	        		new Matrix(Bmat.rotation(0, 0, 0, 1)),
-	        		new Matrix(Bmat.rotation(0.0, 1, 1, 1))
-	        		);
-			player = new Satellite(
-	        		new Matrix(Bmat.translation(0, 0, 0)),
-	        		new Matrix(Bmat.translation(0.0, 0.0, 0)),
-	        		new Matrix(Bmat.rotation(0, 0, 0, 1)),
-	        		new Matrix(Bmat.rotation(0.0, 1, 1, 1))
-	        		);
+					new Position(0,0,-10),
+					new Orientation(0,0,1,0),
+					new Velocity(),
+					new AngularVelocity(0.01,1,1,1)
+					);
+			player = new Satellite(0,0,0);
 			input.takeControlOf(asteroid);
 			didInit = true;
 		}

@@ -4,11 +4,11 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 
 import org.lwjgl.glfw.GLFWKeyCallback;
-//TODO import org.lwjgl.glfw.GLFWMouseButtonCallback;
+//TODOE import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
 public class InputHandler {
 	private GLFWKeyCallback keyCallback;
-	//TODO private GLFWMouseButtonCallback mouseCallBack;
+	//private GLFWMouseButtonCallback mouseCallBack;
 	boolean keyStates[];
 	final long window;
 	private static Satellite underControl;
@@ -54,26 +54,26 @@ public class InputHandler {
     }
 	
 	private void controlSatellite(int key) {
-		final double tvstep = 1;
+		final double tvstep = 0.01;
 		final double rvstep = 0.01;
 		
 		if (key == GLFW_KEY_W){
-        	underControl.thrust(0,0,-tvstep);
+        	underControl.thrust(new Velocity(0,0,-tvstep));
         }
 		else if (key == GLFW_KEY_A){
-			underControl.thrust(-tvstep,0,0);
+			underControl.thrust(new Velocity(-tvstep,0,0));
         }else if (key == GLFW_KEY_S){
-        	underControl.thrust(0,0,tvstep);     	
+        	underControl.thrust(new Velocity(0,0,tvstep));     	
         }else if (key == GLFW_KEY_D){
-        	underControl.thrust(tvstep,0,0);    	
+        	underControl.thrust(new Velocity(tvstep,0,0));    	
         }else if (key == GLFW_KEY_UP){
-        	underControl.thrust(-rvstep, 1, 0, 0);
+        	underControl.thrust(new AngularVelocity(-rvstep, 1, 0, 0));
         }else if (key == GLFW_KEY_DOWN){
-        	underControl.thrust(rvstep, 1, 0, 0);
+        	underControl.thrust(new AngularVelocity(rvstep, 1, 0, 0));
         }else if (key == GLFW_KEY_LEFT){
-        	underControl.thrust(-rvstep, 0, 1, 0);
+        	underControl.thrust(new AngularVelocity(-rvstep, 0, 1, 0));
         }else if (key == GLFW_KEY_RIGHT){
-        	underControl.thrust(rvstep, 0, 1, 0);
+        	underControl.thrust(new AngularVelocity(rvstep, 0, 1, 0));
         }
 	}
 
