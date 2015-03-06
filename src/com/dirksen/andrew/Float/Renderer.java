@@ -74,7 +74,8 @@ public class Renderer {
 	}
 	
 	void setAsCamera(Satellite cam){
-		GL11.glMultMatrix(Matrix.multiply(cam.rotation, cam.position).inverse().getDbuf());
+		//loser
+		//GL11.glMultMatrix(cam.rotation.times(cam.position).invert().getDbuf());
 	}
 	
 	void printCurrentModelviewMatrix(){

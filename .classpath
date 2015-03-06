@@ -8,5 +8,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="float/lib/lwjgl/native"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/jama/Jama-1.0.3.jar" sourcepath="lib/jama/Jama-1.0.3.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

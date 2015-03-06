@@ -3,6 +3,7 @@
 package com.dirksen.andrew.Float;
 
 import static org.lwjgl.glfw.Callbacks.errorCallbackPrint;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 import static org.lwjgl.opengl.GL11.GL_TRUE;	//trying too keep
@@ -12,6 +13,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import java.nio.ByteBuffer;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GLContext;
+
+import Jama.Matrix;
 
 public class BddapIO {
 	private int hieght,width;//,originalHieght,originalWidth;
@@ -63,7 +66,7 @@ public class BddapIO {
 		glfwWindowHint(GLFW_VISIBLE, GL_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // set resizable
         
-        //ubuntu with unity crashes here
+        //ubuntu with some versions of unity crashes here
         //see https://github.com/glfw/glfw/issues/368
         System.out.println("Unity halts here. If your game stops at this line, you need to update unity.\n" +
         		"If there is no unity update yet, you can try using gnome:\n" +
@@ -151,18 +154,18 @@ public class BddapIO {
 	void testUpdate(){
 		if (didInit == false){
 			asteroid = new Asteroid(
-	        		new Matrix(Matrix.translation(0, 0, -10)),
-	        		new Matrix(Matrix.translation(0.0, 0.0, 0)),
-	        		new Matrix(Matrix.rotation(0, 0, 0, 1)),
-	        		new Matrix(Matrix.rotation(0.0, 1, 1, 1))
+	        		new Matrix(Bmat.translation(0, 0, 0)),
+	        		new Matrix(Bmat.translation(0.0, 0.0, 0)),
+	        		new Matrix(Bmat.rotation(0, 0, 0, 1)),
+	        		new Matrix(Bmat.rotation(0.0, 1, 1, 1))
 	        		);
 			player = new Satellite(
-	        		new Matrix(Matrix.translation(0, 0, 0)),
-	        		new Matrix(Matrix.translation(0.0, 0.0, 0)),
-	        		new Matrix(Matrix.rotation(0, 0, 0, 1)),
-	        		new Matrix(Matrix.rotation(0.0, 1, 1, 1))
+	        		new Matrix(Bmat.translation(0, 0, 0)),
+	        		new Matrix(Bmat.translation(0.0, 0.0, 0)),
+	        		new Matrix(Bmat.rotation(0, 0, 0, 1)),
+	        		new Matrix(Bmat.rotation(0.0, 1, 1, 1))
 	        		);
-			input.takeControlOf(player);
+			input.takeControlOf(asteroid);
 			didInit = true;
 		}
 		//float age = age();
