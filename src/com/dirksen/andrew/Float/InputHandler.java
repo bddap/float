@@ -54,33 +54,41 @@ public class InputHandler {
     }
 	
 	private void controlSatellite(int key) {
-		final double tvstep = 0.01;
+		final double tvstep = 0.05;
 		final double rvstep = 0.01;
 		
-		if (key == GLFW_KEY_W){
+		if (key == GLFW_KEY_E){
         	underControl.thrust(new Velocity(0,0,-tvstep));
-        }
-		else if (key == GLFW_KEY_A){
-			underControl.thrust(new Velocity(-tvstep,0,0));
         }else if (key == GLFW_KEY_S){
-        	underControl.thrust(new Velocity(0,0,tvstep));     	
+			underControl.thrust(new Velocity(-tvstep,0,0));
         }else if (key == GLFW_KEY_D){
+        	underControl.thrust(new Velocity(0,0,tvstep));     	
+        }else if (key == GLFW_KEY_F){
         	underControl.thrust(new Velocity(tvstep,0,0));    	
-        }else if (key == GLFW_KEY_UP){
+        }else if (key == GLFW_KEY_A){
+        	underControl.thrust(new Velocity(0,tvstep,0));    	
+        }else if (key == GLFW_KEY_V){
+        	underControl.thrust(new Velocity(0,-tvstep,0));    	
+        }else
+        if (key == GLFW_KEY_I){
         	underControl.thrust(new AngularVelocity(-rvstep, 1, 0, 0));
-        }else if (key == GLFW_KEY_DOWN){
+        }else if (key == GLFW_KEY_K){
         	underControl.thrust(new AngularVelocity(rvstep, 1, 0, 0));
-        }else if (key == GLFW_KEY_LEFT){
+        }else if (key == GLFW_KEY_J){
         	underControl.thrust(new AngularVelocity(-rvstep, 0, 1, 0));
-        }else if (key == GLFW_KEY_RIGHT){
+        }else if (key == GLFW_KEY_L){
         	underControl.thrust(new AngularVelocity(rvstep, 0, 1, 0));
+        }else if (key == GLFW_KEY_SEMICOLON){
+        	underControl.thrust(new AngularVelocity(rvstep, 0, 0, 1));
+        }else if (key == GLFW_KEY_N){
+        	underControl.thrust(new AngularVelocity(-rvstep, 0, 0, 1));
         }
 	}
 
 	void onKeyRelease(int key){
 		if ( key == GLFW_KEY_ESCAPE)
             glfwSetWindowShouldClose(window, GL_TRUE); // We will detect this in our rendering loop
-        if ( key == GLFW_KEY_E)
+        if ( key == GLFW_KEY_R)
             BddapIO.toggleHideMouse(window);
         
        	keyStates[key] = false;

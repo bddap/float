@@ -51,7 +51,7 @@ public class Renderer {
 		
 		//calculate frustum
 		double near = 0.001;
-		double far = 1000.0;
+		double far = 500.0;
 		double aspect = h/w;
 		double right = Math.tan(fov/2)*near;
 		double left = -right;
