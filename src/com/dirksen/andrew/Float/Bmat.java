@@ -30,6 +30,15 @@ public class Bmat{
 				};
 	}
 	
+	static double[][] scale(double s){
+		return new double[][]{
+				{s, 0, 0, 0},
+				{0, s, 0, 0},
+				{0, 0, s, 0},
+				{0, 0, 0, 1}
+				};
+	}
+	
 	static double[][] rotation(double theta, double x, double y, double z){
 		double length;
 

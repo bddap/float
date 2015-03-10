@@ -35,4 +35,8 @@ public class Velocity{
 		y += v.y;
 		z += v.z;
 	}
+	
+	public String toString(){
+		return x + " " + y + " " + z;
+	}
 }

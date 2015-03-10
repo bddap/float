@@ -22,4 +22,8 @@ public class Position {
 	Matrix matrix(){
 		return new Matrix(Bmat.translation(x, y, z));
 	}
+	
+	public String toString(){
+		return x + " " + y + " " + z;
+	}
 }

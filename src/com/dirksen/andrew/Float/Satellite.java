@@ -9,6 +9,8 @@ public class Satellite {
 	Velocity vel;	//velocity is applied to position every tick
 	AngularVelocity ang;
 	
+	Matrix size; Double s;
+	
 	ByteBuffer compbb;	//a ByteBuffer for passing position and rotation to openGl as a single matrix
 	
 	
@@ -27,8 +29,19 @@ public class Satellite {
 		this.vel = vel;
 		this.ang = ang;
 		
+		setSize(1);
+		
 		compbb = ByteBuffer.allocateDirect(4*4*8);
 		compbb.order(ByteOrder.nativeOrder());    // use the device hardware's native byte order
+	}
+	
+	void setSize(double s){
+		size = new Matrix(Bmat.scale(s));
+		this.s = s;
+	}
+
+	double getSize(){
+		return s;
 	}
 	
 	void tick(){
@@ -41,12 +54,12 @@ public class Satellite {
 		vel.add(lv);
 	}
 	
-	void thrust(AngularVelocity lav){
-		//TODO
+	void thrust(AngularVelocity localTorque){
+		ang.add(localTorque.localToGlobal(ori));
 	}
 	
 	void constructRenderMatrix(){
-		Matrix comp = ori.matrix().times(pos.matrix());
+		Matrix comp = size.times(ori.matrix()).times(pos.matrix());
 		
 		double[] compstore = comp.getRowPackedCopy();
 		/*for (int i = 0; i < compstore.length; i++){
@@ -57,5 +70,12 @@ public class Satellite {
 		}
 		System.out.println();*/
 		compbb.asDoubleBuffer().put(compstore);
+	}
+	
+	public String toString(){
+		return  "position: " + pos + "\n" +
+				"velocity: " + vel + "\n" +
+				"orieintaion:" + ori + "\n" +
+				"Angvel:   " + ang;
 	}
 }

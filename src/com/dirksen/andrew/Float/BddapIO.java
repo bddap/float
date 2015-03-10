@@ -146,6 +146,7 @@ public class BddapIO {
 	
 	//begin test code
 	Asteroid asteroid;
+	Asteroid totoroid;
 	Satellite player;
 	private boolean didInit = false;
 	
@@ -155,27 +156,34 @@ public class BddapIO {
 					new Position(0,0,-10),
 					new Orientation(0,0,1,0),
 					new Velocity(),
-					new AngularVelocity(0.01,1,1,1)
+					new AngularVelocity(0.0,0,1,0)
+					); asteroid.setSize(50);
+			totoroid = new Asteroid(
+					new Position(5,5,-10),
+					new Orientation(0,0,1,0),
+					new Velocity(),
+					new AngularVelocity(-0.01,1,1,1)
 					);
-			player = new Satellite(0,0,0);
-			input.takeControlOf(asteroid);
+			player = new Satellite(
+					new Position(0,0,0),
+					new Orientation(),
+					new Velocity(),
+					new AngularVelocity()
+					);
+			input.takeControlOf(player);
 			didInit = true;
 		}
-		//float age = age();
-		//System.out.println("poop is yummy");	//Good one
-    	//float r = (float)(Math.sin(age*0.99f)/2+0.5);
-    	//float g = (float)(Math.sin(age*1.01f)/2+0.5);
-    	//float b = (float)(Math.sin(age)/2+0.5);
-    	
-    	//render.setClearColor(r,g,b,0.0f);
     	
     	render.prepareToDraw();
+    	
     	player.tick();
     	render.setAsCamera(player);
+    	System.out.println(player + "\n");
     	
     	asteroid.tick();
         asteroid.draw();
-        //render.printCurrentModelviewMatrix();
+        totoroid.tick();
+        totoroid.draw();
         
         render.sendToScreen();
         

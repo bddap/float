@@ -25,7 +25,8 @@ public class Asteroid extends Satellite {
 	DoubleBuffer tempdb;
 
 	void draw(){
-
+		GL11.glPushMatrix();
+		
 		constructRenderMatrix();
 		GL11.glMultMatrix(compbb.asDoubleBuffer());
 		//GL11.glTranslated(1,2,3);
@@ -82,6 +83,9 @@ public class Asteroid extends Satellite {
 	        GL11.glVertex3f( 1.0f,-1.0f, 1.0f);
 	        GL11.glVertex3f( 1.0f,-1.0f,-1.0f);
 	    GL11.glEnd();   
+	    
+
+		GL11.glPopMatrix();
 	}
 	
 }

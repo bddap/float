@@ -24,4 +24,16 @@ public class Orientation {
 	Matrix matrix(){
 		return orient;
 	}
+	
+	public String toString(){
+		double [][] or = orient.getArray();
+		String ret = "";
+		for (int i = 0; i < or.length; i++){
+			ret += "\n";
+			for (int j = 0; j < or[0].length; j++){
+				ret += or[i][j] + " ";
+			}
+		}
+		return ret;
+	}
 }
